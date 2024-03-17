@@ -51,71 +51,84 @@ function getmapne()
     end
 end
 
-pcall(function()
-    for i,v in next, workspace:GetDescendants() do
-        pcall(function()
-            v.Transparency = 1
-        end)
+repeat task.wait() until game:IsLoaded()
+if not game:IsLoaded() then game:IsLoaded():Wait(5) end
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local WindowFocusReleasedFunction = function()
+    RunService:Set3dRenderingEnabled(false)
+    setfpscap(15)
+    return
+end
+
+local WindowFocusedFunction = function()
+    RunService:Set3dRenderingEnabled(true)
+    setfpscap(15)
+    return
+end
+
+local Initialize = function()
+    UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
+    UserInputService.WindowFocused:Connect(WindowFocusedFunction)
+    return
+end
+Initialize()
+UserSettings():GetService("UserGameSettings").MasterVolume = 0
+local decalsyeeted = true
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+sethiddenproperty(l,"Technology",2)
+sethiddenproperty(t,"Decoration",false)
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 1
+l.GlobalShadows = 0
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(w:GetDescendants()) do
+    if v:IsA("BasePart") and not v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Transparency = 1
+        v.Reflectance = 0
+    elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") and decalsyeeted then
+        v.Material = "Plastic"
+        v.Transparency = 1
+        v.Reflectance = 0
+        v.TextureID = 0
+    elseif v:IsA("SpecialMesh") and decalsyeeted  then
+        v.TextureId=0
+    elseif v:IsA("ShirtGraphic") and decalsyeeted then
+        v.Graphic=1
+    elseif (v:IsA("Shirt") or v:IsA("Pants")) and decalsyeeted then
+        v[v.ClassName.."Template"]=1
     end
-    for i,v in next, getnilinstances() do
-        pcall(function()
-            v.Transparency = 1
-            for i1,v1 in next, v:GetDescendants() do
-                v1.Transparency = 1
-            end
-        end)
+end
+for i = 1,#l:GetChildren() do
+    e=l:GetChildren()[i]
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
     end
-    local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
-    local g = game
-    local w = g.Workspace
-    local l = g.Lighting
-    local t = w.Terrain
-    sethiddenproperty(l,"Technology",2)
-    sethiddenproperty(t,"Decoration",false)
-    t.WaterWaveSize = 0
-    t.WaterWaveSpeed = 0
-    t.WaterReflectance = 0
-    t.WaterTransparency = 0
-    l.GlobalShadows = 0
-    l.FogEnd = 9e9
-    l.Brightness = 0
-    settings().Rendering.QualityLevel = "Level01"
-    for i, v in pairs(w:GetDescendants()) do
+end
+w.DescendantAdded:Connect(function(v)
+    pcall(function()
         if v:IsA("BasePart") and not v:IsA("MeshPart") then
             v.Material = "Plastic"
             v.Reflectance = 0
-        elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
             v.Transparency = 1
-        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Lifetime = NumberRange.new(0)
-        elseif v:IsA("Explosion") then
-            v.BlastPressure = 1
-            v.BlastRadius = 1
-        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-            v.Enabled = false
-        elseif v:IsA("MeshPart") and decalsyeeted then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-            v.TextureID = 10385902758728957
-        elseif v:IsA("SpecialMesh") and decalsyeeted  then
-            v.TextureId=0
-        elseif v:IsA("ShirtGraphic") and decalsyeeted then
-            v.Graphic=0
-        elseif (v:IsA("Shirt") or v:IsA("Pants")) and decalsyeeted then
-            v[v.ClassName.."Template"]=0
-        end
-    end
-    for i = 1,#l:GetChildren() do
-        e=l:GetChildren()[i]
-        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-            e.Enabled = false
-        end
-    end
-    w.DescendantAdded:Connect(function(v)
-        wait()--prevent errors and shit
-        if v:IsA("BasePart") and not v:IsA("MeshPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
         elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
             v.Transparency = 1
         elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
@@ -128,13 +141,14 @@ pcall(function()
         elseif v:IsA("MeshPart") and decalsyeeted then
             v.Material = "Plastic"
             v.Reflectance = 0
-            v.TextureID = 10385902758728957
+            v.TextureID = 0
+            v.Transparency = 1
         elseif v:IsA("SpecialMesh") and decalsyeeted then
             v.TextureId=0
         elseif v:IsA("ShirtGraphic") and decalsyeeted then
-            v.ShirtGraphic=0
+            v.ShirtGraphic=1
         elseif (v:IsA("Shirt") or v:IsA("Pants")) and decalsyeeted then
-            v[v.ClassName.."Template"]=0
+            v[v.ClassName.."Template"]=1
         end
     end)
 end)
@@ -153,7 +167,862 @@ print(Rebirth)
 
 if (getrank() < 3 and not hasunlockzones("Rainbow River")) or (Rebirth == 1 and not hasunlockzones("Rainbow River")) then
     -- auto rank
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/pipipipipia23/aahsdasd-/main/asdzxc"))()
+    spawn(function()
+wait(5)
+print("AAAAAAAAAAAAAAAAAAAAA")
+repeat wait() until game.Players
+repeat wait() until game.Players.LocalPlayer
+repeat wait() until game.ReplicatedStorage
+repeat wait() until game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui")
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Main")
+local vu = game:GetService("VirtualUser")
+local plr = game.Players.LocalPlayer
+local Client = require(game.ReplicatedStorage.Library.Client)
+----------------------- Mergesort convert map
+getgenv().ticka = tick()
+function mergesort(arr, compareFunc)
+    local function merge(left, right)
+        local result = {}
+        local i, j = 1, 1
+
+        while i <= #left and j <= #right do
+            if compareFunc(left[i], right[j]) then
+                table.insert(result, left[i])
+                i = i + 1
+            else
+                table.insert(result, right[j])
+                j = j + 1
+            end
+        end
+
+        for k = i, #left do
+            table.insert(result, left[k])
+        end
+
+        for k = j, #right do
+            table.insert(result, right[k])
+        end
+
+        return result
+    end
+
+    local n = #arr
+
+    if n <= 1 then
+        return arr
+    end
+
+    local mid = math.floor(n / 2)
+    local left = {}
+    local right = {}
+
+    for i = 1, mid do
+        table.insert(left, arr[i])
+    end
+
+    for i = mid + 1, n do
+        table.insert(right, arr[i])
+    end
+
+    left = mergesort(left, compareFunc)
+    right = mergesort(right, compareFunc)
+
+    return merge(left, right)
+end
+
+function arrmap()
+    local a = require(game:GetService("ReplicatedStorage").Library.Directory.Zones)
+    local b = {}
+
+    for i, v in pairs(a) do
+        table.insert(b, {key = i, value = v.ZoneNumber})
+    end
+
+    local compareFunc = function(a, b)
+        return a.value < b.value
+    end
+
+    local sortedArray = mergesort(b, compareFunc)
+
+    getgenv().arraymap = {}
+    for i, item in ipairs(sortedArray) do
+        getgenv().arraymap[i] = item
+    end
+
+    -- for _, item in ipairs(getgenv().arraymap) do
+    --     print(item.key, item.value)
+    -- end
+end
+
+-- arrmap()
+---------------------------
+local mapdirs = require(game:GetService("ReplicatedStorage").Library.Directory.Zones)
+
+function getnumbermap(map)
+    return mapdirs[map].ZoneNumber
+end
+
+function hasunlockzones(name) 
+    return Client.ZoneCmds.Owns(name)
+end
+
+spawn(function()
+    while true do wait(1)
+        if tick() - getgenv().ticka > 60 * 10 then
+            plr:Kick("vang game")
+        end
+    end
+end)
+
+function romanToNumber(roman)
+    local numerals = {
+        ["i"] = 1,
+        ["v"] = 5,
+        ["x"] = 10,
+        ["l"] = 50,
+        ["c"] = 100,
+        ["d"] = 500,
+        ["m"] = 1000
+    }
+
+    local total = 0
+    local i = 1
+    while i <= #roman do
+        local current = numerals[roman:sub(i, i)]
+        local next = numerals[roman:sub(i + 1, i + 1)]
+        if next and current < next then
+            total = total + next - current
+            i = i + 2
+        else
+            total = total + current
+            i = i + 1
+        end
+    end
+
+    return total
+end
+
+function destroyvipzone()
+    for i,v in pairs(workspace.Map["1 | Spawn"].INTERACT.BREAK_ZONES:GetChildren()) do
+        if tostring(v.Position) == "214.12213134765625, 24.417156219482422, -587.1192626953125" then
+            v:Destroy() 
+        end
+    end
+end
+
+destroyvipzone()
+
+function attack()
+    local a = {}
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Breakables:GetChildren()) do
+        for i1,v1 in pairs(v:GetChildren()) do
+            if (v1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 60 then
+                return v.Name
+            end
+        end
+    end
+end
+
+function getnextmap()
+    return Client.ZoneCmds.GetNextZone()
+end
+
+function dbuoi()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Orbs:GetChildren()) do
+        v.CanCollide = false
+        v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,0,0)
+    end
+    
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Lootbags:GetDescendants()) do
+        if v:IsA("MeshPart") then
+            v.CanCollide = false
+            v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,0,0)
+        end
+    end
+end
+
+function onehitspeed()
+    local Library = require(game:GetService("ReplicatedStorage").Library)
+    local Network = Library.Network
+    local Balancing = Library.Balancing
+    local Zones = Library.Directory.Zones
+    local pets = Library.Save.Get().Inventory.Pet	
+    Library.PlayerPet.CalculateSpeedMultiplier = function(...)
+        return 999999999
+    end
+end
+onehitspeed()
+
+function mtfer()
+    if hasunlockzones('Tiki') == false or getstatusquest("unlock") then
+        game:GetService("ReplicatedStorage").Network.Zones_RequestPurchase:InvokeServer(formatclient(getnextmap()))
+    end
+    local a = Client.RebirthCmds.GetNextRebirth()
+    local b = Client.RebirthCmds.Rebirth(tostring(a._id))
+    pcall(dbuoi)
+end
+
+function formatquest()
+    -- table.insert(tablea, {b.MakeTitle(v), v.Amount, v.Progress})
+    local b =  Client.QuestCmds
+    local a = Client.Save.Get()
+    getgenv().tablequest = {}
+    for i,v in pairs(a.Goals) do
+        local text = string.lower(b.MakeTitle(v))
+        if string.find(text, 'hatch') then
+            table.insert(getgenv().tablequest, 'hatchlastpet')
+        end
+        if string.find(text, "collect") then
+            if string.find(text, "potions") or string.find(text, "potion") then
+                table.insert(getgenv().tablequest,"collectpotion")
+            end
+            if string.find(text, "enchants") or string.find(text, "enchant") then
+                table.insert(getgenv().tablequest,"enchant")
+            end
+        end
+        if string.find(text, "unlock") then
+            table.insert(getgenv().tablequest,"unlock")
+        end
+        if string.find(text, "best") then
+            table.insert(getgenv().tablequest,"best")
+        end
+        if string.find(text, "break") then
+            if string.find(text, "comets") or string.find(text, "comet") then
+                if string.find(text, "best") then
+                    table.insert(getgenv().tablequest,"bestcomet")
+                else
+                    table.insert(getgenv().tablequest,"comet")
+                end
+            end
+            if string.find(text, "coin jars") or string.find(text, "coin jar") then
+                if string.find(text, "best") then
+                    table.insert(getgenv().tablequest,"bestconjars")
+                else
+                    table.insert(getgenv().tablequest,"conjars")
+                end
+            end
+            if string.find(text, "Safes") then
+
+            end
+        end
+        if string.find(text, "use") then
+            if string.find(text, "potions") then
+                if string.find(text, "tier") then
+                    local extracted = text:match("tier (%a+)")
+                    table.insert(getgenv().tablequest,romanToNumber(extracted))
+                else
+                    table.insert(getgenv().tablequest,"useanypotion")
+                end
+            end
+            if string.find(text, "fruits") or string.find(text, "fruit") then
+                table.insert(getgenv().tablequest,"usefruit")
+            end
+            if string.find(text, "flag") or string.find(text, "flags") then
+                table.insert(getgenv().tablequest,"flags")
+            end
+        end
+        if string.find(text, "upgrade") then
+            if string.find(text,"enchant") or string.find(text,"enchants") then
+                table.insert(getgenv().tablequest,"upgradesach")
+            end
+        end
+        if string.find(text, "earn") then
+            if string.find(text, "diamonds") then
+                table.insert(getgenv().tablequest,"getdiamond")
+            end
+        end
+    end
+    return getgenv().tablequest
+end
+
+function getstatusquest(text, bool)
+    if bool == true then
+        for i,v in pairs(formatquest()) do
+            if type(v) == "number" then
+                return v
+            end
+        end
+    end
+    if table.find(formatquest(), text) then
+        return true
+    end
+    return false
+end
+
+function potion(number)
+    local Client = require(game.ReplicatedStorage.Library.Client)
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Potion._byUID) do
+        if v._data.tn == number then
+            return i
+        end
+    end
+    return false
+end
+
+getgenv().values = getupvalues(Client.MachineCmds.GetAll)
+
+function getdataitem(nameitem)    
+    local a = Client.Save.Get()
+    for i,v in pairs(a.VendingStocks) do
+        if string.find(string.lower(i), nameitem) and Client.MachineCmds.Owns(i) and v > 0 then
+            local returnaz = v >= 4 and 3 or v
+            if returnaz > 0 and getgenv().values[2][i] ~= nil then
+                return {getgenv().values[2][i][1].Pad.arrowPivot, i, returnaz}
+            end
+        end
+    end
+    return false
+end
+
+function getdatadily(nameitem)    
+    local a = Client.Save.Get()
+    for i,v in pairs(a.TimedRewardTimestamps) do
+        if string.find(string.lower(i), nameitem) and Client.MachineCmds.Owns(i) then
+            for i1,v1 in pairs(getgenv().values[2]) do
+                if i1 == i then
+                    if type(v1) == 'table' then
+                        return v1[1].Pad.arrowPivot
+                    end
+                end
+            end
+        end
+    end
+    return false
+end
+
+function getplayerzone()
+    return Client.MapCmds.GetPlayerZone()
+end
+
+function formatclient(name)
+    local pattern = " table: .*$"
+    local result = name:gsub(pattern, "") 
+    return result
+end
+
+function formatmap(text)
+    local result = string.match(text, "| (.*)$")
+    return result
+end
+
+function getlastmap()
+    return Client.ZoneCmds.GetMaxOwnedZone()
+end
+
+function getlocation()
+    for i,v in pairs(workspace.Map:GetChildren()) do
+        if formatmap(v.Name) == formatclient(getlastmap()) and v:FindFirstChild("INTERACT") then
+            return v.INTERACT.BREAKABLE_SPAWNS.Main
+        end
+    end
+    return false
+end
+
+function uppermap()
+    local a = nil
+    local b = 0
+    for i,v in pairs(workspace.Map:GetChildren()) do
+        local number = tonumber(string.match(v.Name, "(%d+)"))
+        local namemap = formatmap(v.Name)
+        if number ~= nil and v:FindFirstChild("INTERACT") then
+            if number > b and hasunlockzones(namemap) then
+                b = number
+                a = v.INTERACT.BREAKABLE_SPAWNS.Main
+            end
+        end
+    end
+    return a
+end
+
+function downmap()
+    local a = nil
+    local b = 0
+    for i,v in pairs(workspace.Map:GetChildren()) do
+        local number = tonumber(string.match(v.Name, "(%d+)"))
+        local namemap = formatmap(v.Name)
+        if number ~= nil and v:FindFirstChild("INTERACT") then
+            if number < b and hasunlockzones(namemap) then
+                b = number
+                a = v.INTERACT.BREAKABLE_SPAWNS.Main
+            end
+        end
+    end
+    return a
+end
+
+function findzonemode(currentmap, mymap)
+    if getlocation() ~= false then
+        if (plr.Character.HumanoidRootPart.Position - getlocation().Position).Magnitude > 30 then
+            plr.Character.HumanoidRootPart.CFrame = getlocation().CFrame * CFrame.new(0,10,0)
+        end
+    else
+        plr.Character.HumanoidRootPart.CFrame = uppermap().CFrame * CFrame.new(0,10,0)
+        -- if hasunlockzones(currentmap) then
+        --     if getnumbermap(currentmap) > getnumbermap(mymap) then
+        --         plr.Character.HumanoidRootPart.CFrame = uppermap().CFrame * CFrame.new(0,10,0)
+        --     else
+        --         plr.Character.HumanoidRootPart.CFrame = downmap().CFrame * CFrame.new(0,10,0)
+        --     end
+        -- end
+    end
+end
+
+function autovending(item)
+    local firstdata = getdataitem(item)
+    if firstdata ~= false then
+        print(Client.MachineCmds.CanUse(firstdata[2]))
+        if Client.MachineCmds.Owns(firstdata[2]) and Client.MachineCmds.IsAllowedToOpen(firstdata[2]) then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = firstdata[1] * CFrame.new(5,10,0)
+            wait(5)
+            if (plr.Character.HumanoidRootPart.Position - firstdata[1].Position).Magnitude < 10 then
+                local args = {
+                    [1] = firstdata[2],
+                    [2] = firstdata[3]
+                }
+                game:GetService("ReplicatedStorage").Network.VendingMachines_Purchase:InvokeServer(unpack(args))
+            end
+        end
+        return 
+    end
+end
+
+local blacklistcframe = {}
+
+function tablefind(a,b)
+    if table.find(a, b) then
+        return true
+    end
+    return false
+end
+
+function autocoinjar()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].RandomEvents:GetChildren()) do
+        if v:IsA("Part") and v.Name ~= "GiantJar" and not table.find(blacklistcframe, tostring(v.Jar.Potion)) then
+            return v.Jar
+        end
+    end
+    return false
+end
+
+function collectdaily(name)
+    local firstdata = getdatadily(name)
+    if firstdata ~= false then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = firstdata * CFrame.new(5,10,0)
+        return
+    end
+end
+
+function randompotion()
+    local Client = require(game.ReplicatedStorage.Library.Client)
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Potion._byUID) do
+        if v._data.tn == 1 then
+            return i
+        end
+    end
+    return false
+end
+
+function potion(number)
+    local Client = require(game.ReplicatedStorage.Library.Client)
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Potion._byUID) do
+        if v._data.tn == number then
+            return i
+        end
+    end
+    return false
+end
+
+function getfruit()
+    local Client = require(game.ReplicatedStorage.Library.Client)
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Fruit._byUID) do
+        return i
+    end
+    return false
+end
+
+function getflag()
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Misc._byUID) do
+        if string.find(v._data.id, "Flag") then
+            return {v._data.id,i}
+        end
+    end
+    return false
+end
+
+function findcomet()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Breakables:GetChildren()) do
+        for i1,v1 in pairs(v:GetChildren()) do
+            if tostring(v1.TextureID) == "rbxassetid://12647305097" then
+                return v1
+            end
+        end
+    end
+    return false
+end
+
+function getbag()
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Misc._byUID) do
+        if v._data.id == "Gift Bag" then
+            return true
+        end
+    end
+    return false
+end
+
+function getuid(name)
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Misc._byUID) do
+        if v._data.id == name then
+            return i 
+        end
+    end
+    return false
+end
+
+function getcoinjar()
+    for i,v in pairs(Client.InventoryCmds.State().container._store._byType.Misc._byUID) do
+        if string.find(string.lower(v._data.id), "coin jar") then
+            return i 
+        end
+    end
+    return false
+end
+
+function autoquestne()
+    if #formatquest() > 0 then
+        if type(getstatusquest("cac",true)) == 'number' then
+            if potion(getstatusquest("cac",true)) ~= false then
+                Client.PotionCmds.Consume(potion(getstatusquest("cac",true)))
+            else
+                autovending('potion')
+            end
+        end
+        if getstatusquest("usefruit") then
+            if getfruit() ~= false then
+                Client.FruitCmds.Consume(getfruit())
+            else
+                autovending('fruit')
+            end
+        end
+        if getstatusquest("useanypotion") or getstatusquest("collectpotion") then
+            if not getstatusquest("collectpotion") then
+                if randompotion() ~= false then
+                    Client.PotionCmds.Consume(randompotion())
+                end
+            end
+            autovending('potion')
+        end
+        if getstatusquest("enchant") then
+            autovending('enchant')
+        end
+        if getstatusquest("flags") then
+            if getflag() ~= false then
+                Client.ZoneFlagCmds.Consume(getflag()[1],getflag()[2])
+            end
+        end
+        if getstatusquest("comet") then
+            getgenv().waitattack = false
+            if findcomet() ~= false then
+                if (findcomet().Position - plr.Character.HumanoidRootPart.Position).Magnitude > 25 then
+                    plr.Character.HumanoidRootPart.CFrame = findcomet().CFrame * CFrame.new(0,10,0)
+                end
+                game:GetService("ReplicatedStorage").Network.Breakables_PlayerDealDamage:FireServer(findcomet().Name)
+            end
+            if getuid("Comet") then
+                local args = {
+                    [1] = getuid("Comet")
+                }
+                
+                game:GetService("ReplicatedStorage").Network.Comet_Spawn:InvokeServer(unpack(args))
+            end
+        elseif getstatusquest("bestcomet") then
+            if getuid("Comet") then
+                getgenv().waitattack = true
+                local args = {
+                    [1] = getuid("Comet")
+                }
+                
+                game:GetService("ReplicatedStorage").Network.Comet_Spawn:InvokeServer(unpack(args))
+            else
+                getgenv().waitattack = false
+            end
+        else
+            getgenv().waitattack = true
+        end
+        if getstatusquest("conjars") then
+            if autocoinjar() ~= false then
+                getgenv().waitattack1 = false
+                local zoposition = Vector3.new(autocoinjar().Position.x, plr.Character.HumanoidRootPart.Position.y,autocoinjar().Position.z)
+                if (zoposition - plr.Character.HumanoidRootPart.Position).Magnitude > 100 then
+                    plr.Character.HumanoidRootPart.CFrame = autocoinjar().CFrame
+                else
+                    if hasunlockzones(Client.MapCmds.GetCurrentZone()) == false then
+                        table.insert(blacklistcframe, tostring(autocoinjar().Position))
+                    end
+                end
+            else
+                getgenv().waitattack1 = true
+                wait(1)
+                local args = {
+                    [1] = getcoinjar()
+                }
+                
+                game:GetService("ReplicatedStorage").Network.CoinJar_Spawn:InvokeServer(unpack(args))
+            end
+        elseif getstatusquest("bestconjars") then
+            if getcoinjar() then
+                getgenv().waitattack1 = true
+                local args = {
+                    [1] = getcoinjar()
+                }
+                
+                game:GetService("ReplicatedStorage").Network.CoinJar_Spawn:InvokeServer(unpack(args))
+            else
+                getgenv().waitattack1 = false
+            end
+        else
+            getgenv().waitattack1 = false
+        end
+    end
+end
+
+
+function getstatusquest(text, num)
+    if num == true then
+        for i,v in pairs(formatquest()) do
+            if type(v) == "number" then
+                return v
+            end
+        end
+    end
+    if table.find(formatquest(), text) then
+        return true
+    end
+    return false
+end
+
+function getcoin() 
+    local a = Client.Save.Get()
+    for i,v in pairs(a.Inventory.Currency) do
+        if type(v) == "table" and v.id == "Coins" then
+            return v._am
+        end
+    end
+    return 0
+end
+
+function checkmail()
+    local tb = {
+        [1] = {
+    
+        }
+    }
+    local a = game:GetService("ReplicatedStorage").Network["Mailbox: Get"]:InvokeServer()
+    if type(a) == 'table' then
+        if a.Inbox then
+            for i,v in pairs(a.Inbox) do
+                table.insert(tb[1], v.uuid)
+            end
+        end
+    end
+    if #tb[1] > 0 then
+        return tb
+    else
+        return false
+    end
+end
+
+function insertegg()
+    a = {}
+    for i,v in pairs(workspace.__THINGS.Eggs.Main:GetChildren()) do
+        table.insert(a, v)
+    end
+    
+    local function getNumber(str)
+        return tonumber(str:match("(%d+)"))
+    end
+    
+    table.sort(a, function (str1, str2)
+        return getNumber(str1.Name) > getNumber(str2.Name)
+    end)
+    
+    return a
+end
+
+function getegg()
+    for i,v in pairs(insertegg()) do
+        if v.PriceHUD:FindFirstChild("PriceHUD") or v.PriceHUD:FindFirstChild("PriceHUDAvailable") then
+            local bool = false
+            if v.PriceHUD:FindFirstChild("PriceHUDAvailable") then
+                bool = true
+            end
+            return {v.Name, bool, v.PriceHUD.CFrame * CFrame.new(0,0,-5)}
+        end
+    end
+    return false
+end
+
+function getmaxhatch(nameegg)
+    return Client.EggCmds.GetMaxHatch(nameegg)
+end
+
+function getnameegg(num)
+    local a = require(game:GetService("ReplicatedStorage").Library.Util.EggsUtil)
+    return a.GetIdByNumber(num)
+end
+
+function getnumberegg(string)
+    local number = tonumber(string:match("(%d+)"))
+    return number 
+end
+
+function getmaxhatch()
+    return Client.EggCmds.GetMaxHatch()
+end
+
+function getrank()
+    return Client.Save.Get().Rank
+end
+getgenv().coinsold = 0
+function mainfarmer()
+    if checkmail() ~= false then
+        wait(5)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(147.03858947753906, 23.593482971191406, -349.0108337402344)
+        wait(2)
+        game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Claim"):InvokeServer(unpack(checkmail()))
+        return
+    end
+    if (getgenv().farmcoins and getstatusquest("hatchlastpet")) or not getstatusquest("hatchlastpet") then
+        if tick() - getgenv().coinsold > 3 * 60 then
+            getgenv().farmcoins = false
+            getgenv().coinsold = 0
+        end
+        local a = Client.Save.Get()
+        local b = Client.RankCmds.GetMaxPurchasableEquipSlots()
+        local a2 = a.EggSlotsPurchased
+        if (a.MaxPetsEquipped >= b + 4 or not hasunlockzones("Green Forest") or a.MaxPetsEquipped >= 32) and (not hasunlockzones("Backyard") or a2 >= 6 or getrank() < 3) then
+            autoquestne()
+            if getlocation() ~= false then
+                if (plr.Character.HumanoidRootPart.Position - getlocation().Position).Magnitude > 30 then
+                    plr.Character.HumanoidRootPart.CFrame = getlocation().CFrame * CFrame.new(0,10,0)
+                end
+            else
+                plr.Character.HumanoidRootPart.CFrame = uppermap().CFrame * CFrame.new(0,10,0)
+            end
+        elseif a.MaxPetsEquipped < b + 4 and hasunlockzones("Green Forest") and a.MaxPetsEquipped < 32 then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(691.4805297851562, 16.557279586791992, -251.11878967285156)
+            for i =1 , b do
+                local args = {
+                    [1] = i
+                }
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("EquipSlotsMachine_RequestPurchase"):InvokeServer(unpack(args))
+            end
+        elseif hasunlockzones("Backyard") and a2 < 6 and getrank() >= 3 then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(537.37207, 16.557354, 80.3434677)
+            for i =1, 6 do
+                local args = {
+                    [1] = i
+                }
+                
+                game:GetService("ReplicatedStorage").Network.EggHatchSlotsMachine_RequestPurchase:InvokeServer(unpack(args))                        
+            end
+        end
+    else
+        if not getgenv().farmcoins then
+            if getegg() ~= false then
+                plr.Character.HumanoidRootPart.CFrame = getegg()[3]
+                local a,b = game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getnameegg(getnumberegg(getegg()[1])),getmaxhatch())
+                if a == false then
+                    if string.find(b, "need") or getcoin() < 1000 then
+                        getgenv().farmcoins = true
+                        getgenv().coinsold = tick()
+                    end
+                end
+            else
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(147.03858947753906, 23.593482971191406, -349.0108337402344)
+            end
+        end
+    end
+end
+
+getgenv().numberdaily = 1
+
+function whatthef()
+    local args = {
+        [1] = getgenv().numberdaily
+    }
+    game:GetService("ReplicatedStorage").Network:FindFirstChild("Redeem Free Gift"):InvokeServer(unpack(args))
+    getgenv().numberdaily = getgenv().numberdaily + 1
+    if getgenv().numberdaily >= 12 then
+        getgenv().numberdaily = 1
+    end
+end
+
+getgenv().numberk = 1
+
+function collectrank()
+    local args = {
+        [1] = getgenv().numberk
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Ranks_ClaimReward"):FireServer(unpack(args))
+    getgenv().numberk = getgenv().numberk + 1
+    if getgenv().numberk >= 30 then
+        getgenv().numberk = 1
+    end
+end
+
+function click2(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-50,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-50,a.AbsolutePosition.Y+50,0,false,a,1)
+end
+
+function click3(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-100,a.AbsolutePosition.Y+100,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-100,a.AbsolutePosition.Y+100,0,false,a,1)
+end
+
+function detc4()
+    click2(game:GetService("Players").LocalPlayer.PlayerGui.Rank.Frame.Side.Balance)
+    click3(game:GetService("Players").LocalPlayer.PlayerGui.Rank.Frame.Side.Balance)
+end
+
+spawn(function()
+    while true do wait()
+        pcall(whatthef)
+    end
+end)
+
+spawn(function()
+    while true do wait()
+        pcall(collectrank)
+    end
+end)
+
+spawn(function()
+    while true do wait()
+        pcall(function()
+            game:GetService("ReplicatedStorage").Network.Breakables_PlayerDealDamage:FireServer(attack())
+        end)
+    end
+end)
+
+spawn(function()
+    while true do wait()
+        pcall(detc4)
+    end
+end)
+
+spawn(function()
+    while true do wait(5)
+        pcall(mtfer)
+    end
+end)
+
+while true do wait()
+    local a,b = pcall(mainfarmer)
+    print(a,b)
+end
+    end)
     -- end auto rank
 else
 ---
@@ -232,13 +1101,13 @@ if hasunlockzones("Alien Lab") then
         if game.PlaceId == 16498369169 then
             game:GetService("ReplicatedStorage").Network.World1Teleport:InvokeServer()
             wait(.1)
-            game:Shutdown()
+            plr:Kick("dit me thang hiep")
         end
     end
     spawn(function()
         while true do wait(1)
             if tick() - getgenv().ticka > 60 * 180 then
-                game:Shutdown()
+                plr:Kick("dit me thang hiep")
             end
         end
     end)
@@ -424,34 +1293,6 @@ if hasunlockzones("Alien Lab") then
         end
         return false
     end
-
-    -- if game.ReplicatedStorage.Network:FindFirstChild("Instancing_FireCustomFromServer") then 
-    --     local NeedTap
-    --     game.ReplicatedStorage.Network.Instancing_FireCustomFromServer.OnClientEvent:Connect(function(...) 
-    --         local Zone,Cmd,plr = ...
-    --         if Zone == "AdvancedFishing" then 
-    --             if tostring(plr) == game.Players.LocalPlayer.Name then 
-    --                 if Cmd == "Hook" then 
-    --                     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer("AdvancedFishing","RequestReel")
-    --                     NeedTap = false
-    --                 elseif Cmd == "FishingSuccess" then 
-    --                     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer("AdvancedFishing","RequestCast",pos)
-    --                     NeedTap = false
-    --                 elseif Cmd == "StartAttemtCatch" then
-    --                     NeedTap = true
-    --                     spawn(function() 
-    --                         while NeedTap and wait() do 
-    --                             for i = 1,5 do 
-    --                                 task.spawn(Tap)
-    --                             end
-    --                             wait(.1)
-    --                         end
-    --                     end)
-    --                 end
-    --             end
-    --         end
-    --     end)
-    -- end
 
     function startfarm()
         if getdata() then
@@ -667,6 +1508,7 @@ if hasunlockzones("Alien Lab") then
         getgenv().busy = false
     end
 
+
     print('asdasd')
 
     function fishfuckingfast()
@@ -698,6 +1540,7 @@ if hasunlockzones("Alien Lab") then
             getgenv().availz = require(workspace.__THINGS.__INSTANCE_CONTAINER.Active.AdvancedFishing.ClientModule)
             local old
             old = hookfunction(availz.Networking.Hook, function(a,b)
+                table.foreach(a,print)
                 if game.Players.LocalPlayer.Name == b.Name then
                     fishfuckingfast()
                 end
@@ -930,7 +1773,7 @@ else
     spawn(function()
         while true do wait(1)
             if tick() - getgenv().ticka > 60 * 20 then
-                game:Shutdown()
+                plr:Kick("dit me thang hiep")
             end
         end
     end)
