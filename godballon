@@ -415,7 +415,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/ma
 spawn(function()
     while true do wait(1)
         if tick() - getgenv().ticka > 60 * 10 then
-            game:Shutdown()
+            plr:Kick("vua thich thi vua thoat")
         end
     end
 end)
@@ -705,7 +705,7 @@ if not hasunlockzones("Rainbow Road") then
         --     if game.PlaceId == 16498369169 then
         --         game:GetService("ReplicatedStorage").Network.World1Teleport:InvokeServer()
         --         wait(.5)
-        --         game:Shutdown()
+        --         plr:Kick("vua thich thi vua thoat")
         --     end
         -- end
         if hasunlockzones("Rainbow Road") and abz == nil and game.PlaceId ~= 16498369169 then
