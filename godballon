@@ -10,12 +10,12 @@ local UTS = game.UserInputService
 local camera = game.Workspace.CurrentCamera
 local plr = game.Players.LocalPlayer
 local Client = require(game.ReplicatedStorage.Library.Client)
-
+getgenv().ticka = tick()
 repeat task.wait() until game:IsLoaded()
 if not game:IsLoaded() then game:IsLoaded():Wait(5) end
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
-RunService:Set3dRenderingEnabled(false)
+-- RunService:Set3dRenderingEnabled(false)
 
 local Initialize = function()
     UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
@@ -106,6 +106,11 @@ function hasunlockzones(name)
     return Client.ZoneCmds.Owns(name)
 end
 
+if game.PlaceId == 16498369169 then
+    game:GetService("ReplicatedStorage").Network.World1Teleport:InvokeServer()
+    wait(.1)
+    plr:Kick("chỉ là thoát")
+end
 
 if hasunlockzones('Rainbow Road') then
     function dectectballon(pos)
@@ -401,7 +406,7 @@ else
     spawn(function()
         while true do wait(1)
             if tick() - getgenv().ticka > 60 * 20 then
-                plr:Kick("chỉ là thoát game")
+                plr:Kick("dit me thang hiep")
             end
         end
     end)
