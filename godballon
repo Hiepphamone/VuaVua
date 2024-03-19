@@ -401,7 +401,7 @@ else
     spawn(function()
         while true do wait(1)
             if tick() - getgenv().ticka > 60 * 20 then
-                plr:Kick("dit me thang hiep")
+                plr:Kick("chỉ là thoát game")
             end
         end
     end)
@@ -634,6 +634,27 @@ else
     end
 
     spawn(loop4)
+
+    function checkmail()
+        local tb = {
+            [1] = {
+        
+            }
+        }
+        local a = game:GetService("ReplicatedStorage").Network["Mailbox: Get"]:InvokeServer()
+        if type(a) == 'table' then
+            if a.Inbox then
+                for i,v in pairs(a.Inbox) do
+                    table.insert(tb[1], v.uuid)
+                end
+            end
+        end
+        if #tb[1] > 0 then
+            return tb
+        else
+            return false
+        end
+    end
     
     function unlockmap()
         local a = Client.Save.Get()
