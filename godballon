@@ -16,7 +16,7 @@ getgenv().ticka = tick()
 -- local UserInputService = game:GetService("UserInputService")
 -- local RunService = game:GetService("RunService")
 -- RunService:Set3dRenderingEnabled(false)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
+
 -- local Initialize = function()
 --     UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
 --     UserInputService.WindowFocused:Connect(WindowFocusedFunction)
@@ -102,6 +102,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/ma
 --     end)
 -- end)
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 function hasunlockzones(name) 
     return Client.ZoneCmds.Owns(name)
 end
