@@ -10,14 +10,13 @@ local UTS = game.UserInputService
 local camera = game.Workspace.CurrentCamera
 local plr = game.Players.LocalPlayer
 local Client = require(game.ReplicatedStorage.Library.Client)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 getgenv().ticka = tick()
 -- repeat task.wait() until game:IsLoaded()
 -- if not game:IsLoaded() then game:IsLoaded():Wait(5) end
 -- local UserInputService = game:GetService("UserInputService")
 -- local RunService = game:GetService("RunService")
 -- RunService:Set3dRenderingEnabled(false)
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 -- local Initialize = function()
 --     UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
 --     UserInputService.WindowFocused:Connect(WindowFocusedFunction)
