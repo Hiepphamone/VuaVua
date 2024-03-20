@@ -1,3 +1,4 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 repeat wait() until game.Players
 repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
@@ -111,7 +112,7 @@ if game.PlaceId == 16498369169 then
     wait(.1)
     plr:Kick("vua vua")
 end
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
+
 if hasunlockzones('Rainbow Road') then
     function dectectballon(pos)
         for i,v in pairs(game:GetService("Workspace")["__THINGS"].BalloonGifts:GetChildren()) do
