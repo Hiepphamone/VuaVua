@@ -10,6 +10,7 @@ local UTS = game.UserInputService
 local camera = game.Workspace.CurrentCamera
 local plr = game.Players.LocalPlayer
 local Client = require(game.ReplicatedStorage.Library.Client)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 getgenv().ticka = tick()
 -- repeat task.wait() until game:IsLoaded()
 -- if not game:IsLoaded() then game:IsLoaded():Wait(5) end
@@ -411,7 +412,6 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstCh
 getgenv().ticka = tick()
 local plr = game.Players.LocalPlayer
 local Client = require(game.ReplicatedStorage.Library.Client)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 spawn(function()
     while true do wait(1)
         if tick() - getgenv().ticka > 60 * 10 then
