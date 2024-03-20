@@ -102,7 +102,6 @@ getgenv().ticka = tick()
 --     end)
 -- end)
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 function hasunlockzones(name) 
     return Client.ZoneCmds.Owns(name)
 end
@@ -110,9 +109,9 @@ end
 if game.PlaceId == 16498369169 then
     game:GetService("ReplicatedStorage").Network.World1Teleport:InvokeServer()
     wait(.1)
-    plr:Kick("vua thich thi vua thoat")
+    plr:Kick("vua vua")
 end
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 if hasunlockzones('Rainbow Road') then
     function dectectballon(pos)
         for i,v in pairs(game:GetService("Workspace")["__THINGS"].BalloonGifts:GetChildren()) do
@@ -412,10 +411,11 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstCh
 getgenv().ticka = tick()
 local plr = game.Players.LocalPlayer
 local Client = require(game.ReplicatedStorage.Library.Client)
+
 spawn(function()
     while true do wait(1)
         if tick() - getgenv().ticka > 60 * 10 then
-            plr:Kick("vua thich thi vua thoat")
+            plr:Kick("vua vua")
         end
     end
 end)
@@ -705,7 +705,7 @@ if not hasunlockzones("Rainbow Road") then
         --     if game.PlaceId == 16498369169 then
         --         game:GetService("ReplicatedStorage").Network.World1Teleport:InvokeServer()
         --         wait(.5)
-        --         plr:Kick("vua thich thi vua thoat")
+        --         plr:Kick("vuavua")
         --     end
         -- end
         if hasunlockzones("Rainbow Road") and abz == nil and game.PlaceId ~= 16498369169 then
