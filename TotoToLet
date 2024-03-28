@@ -1,3 +1,4 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hiepphamone/lowmap/main/lowmap"))()
 if game.PlaceId ~= 14082129854 then
     repeat wait() until game.Players
     repeat wait() until game.Players.LocalPlayer
@@ -44,6 +45,14 @@ else
         end
         return false
     end
+
+    function getcancel()
+        if game:GetService("Players").LocalPlayer.PlayerGui.Match.MatchFinish.Visible == true then
+            return game:GetService("Players").LocalPlayer.PlayerGui.Match.MatchFinish.MatchFinishFrame.EndOptions.PlayAgain.ButtonFrame.PlayAgainButton.ContentText == "Cancel Play Again"
+        end
+        return false
+    end
+    
     function click(a)
         game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-60,a.AbsolutePosition.Y+60,0,true,a,1)
         game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-60,a.AbsolutePosition.Y+60,0,false,a,1)
@@ -56,13 +65,16 @@ else
                     firesignal(game:GetService("Players").LocalPlayer.PlayerGui.Match.WaveInfo.AutoSkip.OnAndOff.Activated)
                 end
                 if getstatusbtn() then
-                    print('asdasdasd')
-                    repeat wait(8)
-                        click(game:GetService("Players").LocalPlayer.PlayerGui.Match.MatchFinish.MatchFinishFrame.EndOptions.PlayAgain.ButtonFrame.PlayAgainButton)
-                        wait(.2)
-                    until not getstatusbtn()
+                    click(game:GetService("Players").LocalPlayer.PlayerGui.Match.MatchFinish.MatchFinishFrame.EndOptions.PlayAgain.ButtonFrame.PlayAgainButton)
+                    wait(.2)
+                    wait(5)
                 else
                     click(game:GetService("Players").LocalPlayer.PlayerGui.VotingFrame.VoteFrame.VoteMainFrame.MainFrame.Easy.Vote)
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Match.MatchFinish.Visible == true then
+                    if getcancel() then
+                        click(game:GetService("Players").LocalPlayer.PlayerGui.Match.MatchFinish.MatchFinishFrame.EndOptions.PlayAgain.ButtonFrame.PlayAgainButton)
+                    end
                 end
             end)
         end
