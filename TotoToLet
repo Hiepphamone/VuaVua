@@ -22,10 +22,11 @@ if game.PlaceId ~= 14082129854 then
         vcl = 48
     end
     function clickframe(a)
-        game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-30,a.AbsolutePosition.Y+vcl,0,true,a,1)
-        game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-30,a.AbsolutePosition.Y+vcl,0,false,a,1)
+        game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-30,a.AbsolutePosition.Y+53,0,true,a,1)
+        game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-30,a.AbsolutePosition.Y+53,0,false,a,1)
     end
     game:GetService("CoreGui").PlayerList:Destroy()
+
     for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
         if v:IsA('ScreenGui') then
             if v.DisplayOrder > 100000 then
@@ -87,6 +88,36 @@ if game.PlaceId ~= 14082129854 then
         return false
     end
 
+    -- game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
+    -- wait(4)
+    -- game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
+
+    if getupvalues(a.Changed)[1]._data.Currencies.Gems >= getgenv().gem and getupvalues(a.Changed)[1]._data.Currencies.Coins >= 100 then
+        repeat wait()
+            pcall(function()
+                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Visible = true
+                if antisuccess() ~= false then
+                    clickframe(antisuccess())
+                    return
+                end
+                if antitrade() == false then
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = getgenv().username
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.MessageBox.Text = ''
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:CaptureFocus()
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.PlaceholderText = getupvalues(a.Changed)[1]._data.Currencies.Gems
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text = getupvalues(a.Changed)[1]._data.Currencies.Gems
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:ReleaseFocus()
+                    wait(2)
+                    click(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                    wait(1)
+                    click(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
+                else
+                    clickframe(antitrade())
+                end
+            end)
+        until getupvalues(a.Changed)[1]._data.Currencies.Gems < getgenv().gem
+    end
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Visible = false
     if getgenv().collectmission then
         while getgenv().collectmission do wait()
             pcall(function()
@@ -271,7 +302,8 @@ else
         game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-60,a.AbsolutePosition.Y+60,0,true,a,1)
         game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X-60,a.AbsolutePosition.Y+60,0,false,a,1)
     end
-    
+    game:GetService("CoreGui").TeleportGui:Destroy()
+    game:GetService("CoreGui").RobloxPromptGui:Destroy()
     spawn(function()
         while true do wait(.1)
             pcall(function()
