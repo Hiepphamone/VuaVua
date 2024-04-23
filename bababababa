@@ -1,4 +1,4 @@
-getgenv().username = 'a2s1c74'
+getgenv().username = 'shopgodpet'
 repeat wait() until game.Players
 repeat wait() until game.Players.LocalPlayer
 repeat wait() until game.ReplicatedStorage
