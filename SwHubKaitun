@@ -1,0 +1,102 @@
+if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
+
+getgenv().Faster = { 
+    ['CDK Super Fast'] = true,
+    ['Buy Color Haki'] = 3 -- Legendary Haki Max 3
+}
+
+getgenv().RAM = { -- Log Des 
+    ['Enabled'] = false, 
+    ['Delay'] = 600 
+}
+
+getgenv().Setting = {
+    ['FPS Booster'] = true,
+    ['White Screen'] = true,
+    ['Disible Gui'] = false,
+    ['Lock Fruit'] = 1000000,
+    ['AFK Check'] = 150,
+    ['Rejoin'] = false 
+}
+
+getgenv().Quest = {
+    ['RGB Haki'] = true,
+    ['Evo Race'] = {
+        ['Enabled'] = true, 
+        ['Select Race'] = {'Fishman','Mink','Human','Skypiea'},
+        ['Evo V3'] = true
+    },
+    ['Quest Dough Awaken'] = {
+        ['Enabled'] = true,
+        ['Fast Mode'] = true 
+    },
+    ['Kill Boss'] = true, 
+    ['Quest Race V4'] = true 
+}
+
+getgenv().Fruit = {
+    ['Main'] = {'Dough-Dough'}, 
+    ['Select Fruit'] = {'Dough-Dough','Kitsune-Kitsune'}, 
+    ['Bring Fruit'] = true 
+}
+
+getgenv().Melee = {
+    ['Superhuman'] = true,
+    ['Death Step'] = true,
+    ['Sharkman Karate'] = true,
+    ['Electric Claw'] = true,
+    ['Dragon Talon'] = true,
+    ['Godhuman'] = true
+}
+
+getgenv().Sword = {
+    ['Saber'] = true,
+    ['Midnight Blade'] = true,
+    ['Shisui'] = true,
+    ['Saddi'] = true,
+    ['Wando'] = true,
+    ['Yama'] = true,
+    ['Koko'] = false,
+    ['Rengoku'] = true,
+    ['Canvander'] = true,
+    ['Buddy Sword'] = true,
+    ['Twin Hooks'] = true,
+    ['SpikeyTrident'] = true,
+    ['Hallow Scryte'] = true,
+    ['Dark Dagger'] = true,
+    ['Tushita'] = true,
+    ['True Triple Katana'] = true,
+    ['Cursed Dual Katana'] = true
+}
+
+getgenv().Gun = {
+    ['Kabucha'] = true,
+    ['Acidum Rifle'] = true,
+    ['Soul Guitar'] = true, 
+    ['Serpent Bow'] = true
+}
+
+getgenv().Mastery = {
+    ['Melee'] = true,
+    ['Fruit'] = true,
+
+    ['Sword'] = true,
+    ['Setting Sword'] = { 
+        [1] = "Tushita",
+        [6] = "Yama",
+    },
+
+    ['Gun'] = false,
+    ['Setting Gun'] = { 
+        [1] = 'Soul Guitar',
+        [2] = 'Kabucha',
+        [3] = 'Acidum Rifle',
+        [4] = 'Serpent Bow'
+    }
+}
+
+getgenv().Deleted_Ui = false -- Not using Ui /
+
+_G.On_Next_Generation = true
+script_key="uNuFIlQGqmrHOumRrJBsvQKMsLzGEePD";
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/58876769bc015b00b9a3008484e99085.lua"))()
